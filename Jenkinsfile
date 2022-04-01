@@ -14,6 +14,12 @@ pipeline {
         timestamps()
     }
     stages {
+        stage('Clean') {
+            steps {
+                sh 'terraform destroy --auto-approve -no-color -var prod_deploy=true'
+            }
+        }
+
         stage('Init') {
             steps {
                 sh 'terraform init -no-color '
