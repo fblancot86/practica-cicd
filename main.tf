@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-variable "aws_region" {
-  default = "eu-west-1"
-}
-
 resource "aws_s3_bucket" "dev" {
   bucket = "acme-storage-dev-${random_string.texto.result}"
 
