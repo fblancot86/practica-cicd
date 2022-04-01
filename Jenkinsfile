@@ -33,7 +33,7 @@ pipeline {
 
         stage('Apply Dev') {
             steps {
-                sh 'terraform apply --auto-approve -no-color -var env=dev'
+                sh 'terraform apply --auto-approve -no-color -var prod_deploy=false'
             }
         }
 
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 timeout(time: 10, unit: 'MINUTES') {
                     input message: 'Are you sure to deploy to Production?', ok: 'Yes, deploy to Production'
-                        sh 'terraform apply --auto-approve -no-color -var env=prod'
+                        sh 'terraform apply --auto-approve -no-color -var prod_deploy=true'
 
                 }
             }
