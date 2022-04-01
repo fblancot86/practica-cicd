@@ -7,26 +7,21 @@ terraform {
   }
 }
 
-resource "aws_s3_bucket" "dev" {
-  bucket = "acme-storage-dev-${random_string.texto.result}"
-
-  tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
-  }
+variable "env" {
+  default = "dev"
 }
 
-resource "aws_s3_bucket" "prod" {
-  bucket = "acme-storage-prod-${random_string.texto.result}"
+resource "aws_s3_bucket" "bucket" {
+  bucket = "acme-storage-${var.env}-${random_string.texto.result}"
 
   tags = {
     Name        = "My bucket"
-    Environment = "Dev"
+    Environment = var.env
   }
 }
 
 resource "aws_s3_bucket_acl" "private" {
-  bucket = aws_s3_bucket.dev.id
+  bucket = aws_s3_bucket.bucket.id
   acl    = "private"
 }
 

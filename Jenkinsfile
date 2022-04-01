@@ -16,37 +16,35 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-                sh 'terraform init'
+                sh 'terraform init -no-color '
             }
         }
         stage('Validate') {
             steps {
-                sh 'terraform validate'
+                sh 'terraform validate -no-color '
             }
         }
 
         stage('Plan') {
             steps {
-                sh 'terraform plan'
+                sh 'terraform plan -no-color '
             }
         }
 
-        stage('Apply') {
+        stage('Apply Dev') {
             steps {
-                sh 'terraform apply --auto-approve'
+                sh 'terraform apply --auto-approve -no-color -var env=dev'
             }
         }
 
-        // stage('Publish') {
-        //     steps {
-        //         dir('python-application-example') {
-        //             timeout(time: 10, unit: 'MINUTES') {
-        //                 input message: 'Are you sure to deploy?', ok: 'Yes, deploy to PyPI'
-        //                     sh "python -m twine upload dist/* -u $PYPI_CREDENTIALS_USR -p $PYPI_CREDENTIALS_PSW --skip-existing"
+        stage('Apply Prod') {
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    input message: 'Are you sure to deploy to Production?', ok: 'Yes, deploy to Production'
+                        sh 'terraform apply --auto-approve -no-color -var env=prod'
 
-        //             }
-        //         }
-        //     }
-        // }        
+                }
+            }
+        } 
     }
 }
