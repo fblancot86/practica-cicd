@@ -14,35 +14,45 @@ pipeline {
         timeout(time: 1, unit: 'MINUTES')
         timestamps()
     }
-    
+
     stages {
         stage('Init') {
             steps {
-                sh 'terraform init -no-color'
+                dir('infra') {
+                    sh 'terraform init -no-color'
+                }
             }
         }
 
         stage('Validate') {
             steps {
-                sh 'terraform validate -no-color'
+                dir('infra') {
+                    sh 'terraform validate -no-color'
+                }
             }
         }
 
         stage('Plan Dev') {
             steps {
-                sh 'terraform plan -no-color  -var bucket_s3_env=dev'
+                dir('infra') {
+                    sh 'terraform plan -no-color  -var bucket_s3_env=dev'
+                }
             }
         }
 
         stage('Apply Dev') {
             steps {
-                sh 'terraform apply --auto-approve -no-color -var bucket_s3_env=dev'
+                dir('infra') {
+                    sh 'terraform apply --auto-approve -no-color -var bucket_s3_env=dev'
+                }
             }
         }
 
         stage('Plan Prod') {
             steps {
-                sh 'terraform plan -no-color -var bucket_s3_env=prod'
+                dir('infra') {
+                    sh 'terraform plan -no-color -var bucket_s3_env=prod'
+                }
             }
         }        
 
@@ -50,7 +60,9 @@ pipeline {
             steps {
                 timeout(time: 10, unit: 'MINUTES') {
                     input message: 'Are you sure to deploy to Production?', ok: 'Yes, deploy to Production'
-                        sh 'terraform apply --auto-approve -no-color -var bucket_s3_env=prod
+                        dir('infra') {
+                            sh 'terraform apply --auto-approve -no-color -var bucket_s3_env=prod'
+                        }
 
                 }
             }

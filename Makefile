@@ -1,23 +1,23 @@
 
-all: init clean validate plan dev_deploy
+all: init clean validate plan apply
 
 init:
 	@echo Init
-	terraform init
+	cd infra && terraform init
 
 clean:
 	@echo Clean
-	terraform destroy --auto-approve -var bucket_s3_env=dev
+	cd infra && terraform destroy --auto-approve -var bucket_s3_env=dev
 
 validate:
 	@echo Validate
-	terraform validate
+	cd infra && terraform validate
 
 plan:
 	@echo Plan
-	terraform plan
+	cd infra && terraform plan -var bucket_s3_env=dev
 
 apply:
 	@echo Apply Dev
-	terraform apply --auto-approve -var bucket_s3_env=dev
+	cd infra && terraform apply --auto-approve -var bucket_s3_env=dev
 
