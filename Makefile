@@ -1,6 +1,5 @@
 
-all: init clean validate plan dev_deploy prod_deploy
-only_dev: init clean validate plan dev_deploy
+all: init clean validate plan dev_deploy
 
 init:
 	@echo Init
@@ -8,7 +7,7 @@ init:
 
 clean:
 	@echo Clean
-	terraform destroy --auto-approve -var prod_deploy=true
+	terraform destroy --auto-approve -var bucket_s3_env=dev
 
 validate:
 	@echo Validate
@@ -18,11 +17,7 @@ plan:
 	@echo Plan
 	terraform plan
 
-dev_deploy:
+apply:
 	@echo Apply Dev
-	terraform apply --auto-approve -var prod_deploy=false
-
-prod_deploy:
-	@echo Apply Prod
-	terraform apply --auto-approve -var prod_deploy=true
+	terraform apply --auto-approve -var bucket_s3_env=dev
 
