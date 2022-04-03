@@ -1,4 +1,4 @@
-pipelineJob('Practica Terraform') {
+pipelineJob('Práctica Terraform') {
     definition {
         cpsScm {
             scm {
@@ -16,7 +16,7 @@ pipelineJob('Practica Terraform') {
     }
 }
 
-pipelineJob('Practica Check S3') {
+pipelineJob('Práctica Check S3') {
     definition {
         cpsScm {
             scm {
