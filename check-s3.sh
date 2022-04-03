@@ -7,7 +7,7 @@ in="${1:-s3.list}"
 while IFS= read -r bucket
 do
 	echo "Working on $bucket ..."
-    SIZE="$(aws s3 ls s3://$bucket --recursive --summarize | grep Size | awk '{print $3}') 2> /dev/null"
+    SIZE="$(aws s3 ls s3://$bucket --recursive --summarize | grep Size | awk '{print $3}' 2> /dev/null)"
 
     echo "$bucket $SIZE"
 
