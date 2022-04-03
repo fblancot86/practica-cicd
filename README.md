@@ -53,11 +53,11 @@ Crear un Cloud de Docker con una plantilla con los siguientes datos:
   - Práctica Terraform: Se encarga del hacer el deployment de Desarrollo y de Producción si se confirma, si a los 10 minutos no se ha respondido se abortará automáticamente.
   - Práctica Check S3: Se encarga de comprobar cada 10 minutos si los Buckets en S3 que empiecen por "acme-storage" contienen más de 20 MiB, si es así se vaciarán automáticamente.
 
-  ## Github Actions
-  ### Requisitos
-  Crear 2 Secretos para Actions:
-  - AWS_ACCESS_KEY_ID: Access Key de AWS
-  - AWS_SECRET_ACCESS_KEY: Secret Key de AWS
+## Github Actions
+### Requisitos
+Crear 2 Secretos para Actions:
+- AWS_ACCESS_KEY_ID: Access Key de AWS
+- AWS_SECRET_ACCESS_KEY: Secret Key de AWS
 
-  ### Job
-  El repositorio contiene un fichero yaml en .github/workflows que permite tener un Job que se encarga de hacer el deployment, tanto de Desarrollo como de Producción, cada vez que se hace un push al repositorio.
+### Job
+El repositorio contiene un fichero yaml en .github/workflows que permite tener un Job que se encarga de hacer el deployment, tanto de Desarrollo como de Producción, cada vez que se hace un push al repositorio.
