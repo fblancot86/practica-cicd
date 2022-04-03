@@ -7,16 +7,18 @@ in="${1:-s3.list}"
 while IFS= read -r bucket
 do
 	echo "Working on $bucket ..."
-    SIZE="$(aws s3 ls s3://$bucket --recursive --summarize | grep Size | awk '{print $3}')"
+    SIZE="$(aws s3 ls s3://$bucket --recursive --summarize | grep Size | awk '{print $3}') 2> /dev/null"
 
     echo "$bucket $SIZE"
 
-    if [$SIZE -gt 20971520]
-    then
-        echo "Emptying $bucket ..."
-        aws s3 rm s3://$bucket --recursive
-    else
-        echo "Bucket size under 20 MiB ($SIZE Bytes) ..."
+    if [$SIZE != ""]
+        if [$SIZE -gt 20971520]
+        then
+            echo "Emptying $bucket ..."
+            aws s3 rm s3://$bucket --recursive
+        else
+            echo "Bucket size under 20 MiB ($SIZE Bytes) ..."
+        fi
     fi
 done < "${in}"
 
