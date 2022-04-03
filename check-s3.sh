@@ -9,7 +9,7 @@ do
 	echo "Working on $bucket ..."
     SIZE="$(aws s3 ls s3://$bucket --recursive --summarize 2> /dev/null | grep Size | awk '{print $3}')"
 
-    if [ $SIZE -ne "" ]
+    if [ ! -z "$SIZE" ]
     then
         if [ $SIZE -gt 20971520 ]
         then
