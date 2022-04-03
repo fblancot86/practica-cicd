@@ -9,7 +9,9 @@ do
 	echo "Working on $bucket ..."
     SIZE="$(aws s3 ls s3://$bucket --recursive --summarize | grep Size | awk '{print $3}')"
 
-    if [ $SIZE != "" && $SIZE -gt 20971520 ]
+    echo "$bucket $SIZE"
+
+    if [$SIZE -gt 20971520]
     then
         echo "Emptying $bucket ..."
         aws s3 rm s3://$bucket --recursive
