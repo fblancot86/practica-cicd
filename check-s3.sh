@@ -12,6 +12,7 @@ do
     echo "$bucket $SIZE"
 
     if [$SIZE != ""]
+    then
         if [$SIZE -gt 20971520]
         then
             echo "Emptying $bucket ..."
