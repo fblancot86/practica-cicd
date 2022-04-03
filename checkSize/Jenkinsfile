@@ -19,7 +19,8 @@ pipeline {
     stages {
         stage('Check Size') {
             steps {
-                sh 'sh check-s3.sh'
+                dir('checkSize') {
+                    sh 'sh check-s3.sh'
             }
         }            
     }
