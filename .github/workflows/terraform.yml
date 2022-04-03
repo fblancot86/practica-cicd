@@ -50,7 +50,11 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: "eu-west-1"
-      run: cd infra && terraform plan -var bucket_s3_env=prod
+      run: |
+        cd infra
+        terraform state rm aws_s3_bucket.bucket aws_s3_bucket_acl.acl
+        terraform plan -var bucket_s3_env=prod
+        
 
     - name: Terraform Apply Production
       env:
